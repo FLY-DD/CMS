@@ -9,4 +9,5 @@ interface iinterceptor<T = AxiosResponse> {
 export interface newConfig<T = AxiosResponse> extends AxiosRequestConfig {
   interceptors?: iinterceptor<T>
   showLoading?: boolean
+  headers?: any
 }

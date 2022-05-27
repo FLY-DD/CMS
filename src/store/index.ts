@@ -13,4 +13,7 @@ const store = createStore<iRootState>({
     login
   }
 })
+export function loadLocalCache() {
+  store.dispatch('login/loadLocalData')
+}
 export default store

@@ -1,11 +1,15 @@
 import { commonRequest } from './request'
 import { BASE_URL } from './request/config'
+import storge from '@/utils/cache'
+import type { newConfig } from './request/type'
 
-const newRequest = new commonRequest({
+export const newRequest = new commonRequest({
   baseURL: BASE_URL,
   timeout: 10000,
   interceptors: {
-    requestSuccess: (config) => {
+    requestSuccess: (config: newConfig) => {
+      const token = storge.getCache('token') ?? ''
+      if (token) config.headers.Authorization = `Bearer ${token}`
       return config
     },
     requestFailed: (err) => {},
@@ -15,20 +19,20 @@ const newRequest = new commonRequest({
     responseFailed: (err) => {}
   }
 })
-interface dataType {
-  data: any
-  returnCode: string
-  success: boolean
-}
-newRequest
-  .requset<dataType>({
-    method: 'GET',
-    url: '/home/multidata',
-    interceptors: {
-      requestSuccess: (config) => {
-        return config
-      }
-    },
-    showLoading: false
-  })
-  .then((res) => {})
+// interface dataType {
+//   data: any
+//   returnCode: string
+//   success: boolean
+// }
+// newRequest
+//   .requset<dataType>({
+//     method: 'GET',
+//     url: '/home/multidata',
+//     interceptors: {
+//       requestSuccess: (config) => {
+//         return config
+//       }
+//     },
+//     showLoading: false
+//   })
+//   .then((res) => {})
