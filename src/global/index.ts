@@ -15,8 +15,13 @@ import {
   ElMenu,
   ElSubmenu,
   ElMenuItemGroup,
-  ElMenuItem
+  ElMenuItem,
+  ElAvatar,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu
 } from 'element-plus'
+import _Avatar from 'element-plus/lib/el-avatar'
 import type { App } from 'vue'
 const eleArry = [
   ElButton,
@@ -35,7 +40,11 @@ const eleArry = [
   ElMenu,
   ElSubmenu,
   ElMenuItemGroup,
-  ElMenuItem
+  ElMenuItem,
+  ElAvatar,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu
 ]
 
 function registerEle(app: App) {
