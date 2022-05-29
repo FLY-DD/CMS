@@ -13,8 +13,8 @@ import '@/assets/css/index.less'
 import 'element-plus/lib/theme-chalk/base.css'
 
 const appInstance = createApp(App)
+appInstance.use(store)
+loadLocalCache() //这里的执行顺序 是先将路由注册进去 在执行挂载的操作
 appInstance.use(router)
 appInstance.use(mountElePlus)
-appInstance.use(store)
-loadLocalCache()
 appInstance.mount('#app')

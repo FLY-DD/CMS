@@ -2,6 +2,7 @@ import type { Module } from 'vuex'
 import type { iloginState } from './type'
 import type { iRootState } from '../type'
 
+import { mapMenuToRouter } from '@/utils/mapMenuToRoutes'
 import storge from '@/utils/cache'
 
 import { signIn, getUserInfoById, getUserMenuByRoleId } from '@/api/login'
@@ -14,6 +15,9 @@ const loginInfo: Module<iloginState, iRootState> = {
     return {
       name: 'lsc',
       age: 18,
+      // token: storge.getCache('token') ?? '',
+      // userInfo: storge.getCache('userInfo') ?? null,
+      // userMenu: storge.getCache('userMenu') ?? null 為何不選擇此種方法賦值，因为动态注册路由刷新也会消失，因此将此处逻辑写在一起
       token: '',
       userInfo: null,
       userMenu: null
@@ -28,7 +32,13 @@ const loginInfo: Module<iloginState, iRootState> = {
       state.userInfo = data
     },
     changeUserMenu(state, data: any) {
+      console.log(222)
+
       state.userMenu = data
+      const route = mapMenuToRouter(data)
+      route.forEach((item) => {
+        router.addRoute('main', item)
+      })
     }
   },
   actions: {
@@ -46,6 +56,8 @@ const loginInfo: Module<iloginState, iRootState> = {
       const userMenuData = await getUserMenuByRoleId(id)
       commit('changeUserMenu', userMenuData.data)
       storge.setCache('userMenu', userMenuData.data)
+
+      mapMenuToRouter(userMenuData.data)
       //4 跳转到首页
       router.push('/main')
     },

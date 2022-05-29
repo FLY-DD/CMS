@@ -7,7 +7,15 @@ import {
   ElFormItem,
   ElInput,
   ElCheckbox,
-  ElLink
+  ElLink,
+  ElAside,
+  ElContainer,
+  ElMain,
+  ElHeader,
+  ElMenu,
+  ElSubmenu,
+  ElMenuItemGroup,
+  ElMenuItem
 } from 'element-plus'
 import type { App } from 'vue'
 const eleArry = [
@@ -19,7 +27,15 @@ const eleArry = [
   ElFormItem,
   ElInput,
   ElCheckbox,
-  ElLink
+  ElLink,
+  ElAside,
+  ElContainer,
+  ElMain,
+  ElHeader,
+  ElMenu,
+  ElSubmenu,
+  ElMenuItemGroup,
+  ElMenuItem
 ]
 
 function registerEle(app: App) {

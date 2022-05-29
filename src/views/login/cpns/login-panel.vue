@@ -1,6 +1,6 @@
 <template>
   <div class="login-panel">
-    <h1 class="title">后台管理系统</h1>
+    <h1 class="title" style="margin-bottom: 20px">后台管理系统</h1>
     <el-tabs type="border-card" class="demo-tabs" stretch v-model="whichPane">
       <el-tab-pane name="account">
         <template #label>
