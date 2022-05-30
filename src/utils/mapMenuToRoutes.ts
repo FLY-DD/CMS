@@ -1,6 +1,11 @@
 import { commonRequest } from './../service/request/index'
 import { resData } from './../api/login/type'
+import user from '@/router/main/system/user/user'
+
 import type { RouteRecordRaw } from 'vue-router'
+import type { iBreadcrumbData } from '@/base-ui/breadcrumb'
+//路由跳转到main页的逻辑 总默认跳转到第一个菜单下的第二级选项(所以需要对第一个菜单进行保留)
+let firstMenu: any = null
 
 export function mapMenuToRouter(userMenu: any): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
@@ -16,11 +21,41 @@ export function mapMenuToRouter(userMenu: any): RouteRecordRaw[] {
       if (item.type === 2) {
         const res = allRoutes.find((res) => item.url === res.path)
         if (res) routes.push(res)
+        if (!firstMenu) firstMenu = item
       } else {
         generateRoutes(item.children)
       }
     })
   }
   generateRoutes(userMenu)
+
   return routes
 }
+//foreach的返回值 始终为undefied 所以使用递归函数 使用到返回值不能使用foreach遍历
+//该函数作用查找当前路由路径所在的userMenu的对象
+export function getBreadcrumbData(userMenu: any[], currentPath: string) {
+  const breadcrumbData: iBreadcrumbData[] = []
+  getMenuItem(userMenu, currentPath, breadcrumbData)
+  return breadcrumbData
+}
+
+export function getMenuItem(
+  userMenu: any[],
+  currentPath: string,
+  breadcrumbData?: iBreadcrumbData[]
+): any {
+  for (const menu of userMenu) {
+    if (menu.type === 1) {
+      const res = getMenuItem(menu.children ?? [], currentPath)
+      if (res) {
+        breadcrumbData?.push({ name: menu.name, path: menu.url })
+        breadcrumbData?.push({ name: res.name, path: res.url })
+        return res
+      }
+    } else if (menu.type === 2 && menu.url === currentPath) {
+      return menu
+    }
+  }
+}
+//函数内执行的函数脱离当前函数执行，如何产生连结 1 利用返回值 2 利用全局变量
+export { firstMenu }

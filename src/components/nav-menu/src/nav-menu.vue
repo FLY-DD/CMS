@@ -8,7 +8,7 @@
       active-text-color="#0a60bd"
       background-color="#0c2135"
       class="el-menu-vertical-demo"
-      default-active="2"
+      :default-active="menuId"
       text-color="#b7bdc3"
       :collapse="collapse"
     >
@@ -37,9 +37,10 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
+import { getMenuItem } from '@/utils/mapMenuToRoutes'
 export default defineComponent({
   name: 'nav-menu',
   props: {
@@ -50,9 +51,14 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    const route = useRoute()
     const router = useRouter()
-    const userMenu = computed(() => store.state.login.userMenu)
+    const route = useRoute()
+    const userMenu = computed(() => store.state.login.userMenu) //computed 获取到的是一个ref对象
+    //执行的作用根据路由路径判断当前所要展开的nav-menu菜单
+    const chooseMenuItem = getMenuItem(userMenu.value, route.path)
+
+    const menuId = ref(chooseMenuItem.id + '')
+    //保持刷新后选中菜单选项
     const handleClick = (url: string) => {
       router.push({
         path: url ?? '/not-found'
@@ -60,7 +66,8 @@ export default defineComponent({
     }
     return {
       userMenu,
-      handleClick
+      handleClick,
+      menuId
     }
   }
 })

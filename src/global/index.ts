@@ -19,9 +19,17 @@ import {
   ElAvatar,
   ElDropdown,
   ElDropdownItem,
-  ElDropdownMenu
+  ElDropdownMenu,
+  ElRow,
+  ElCol,
+  ElSelect,
+  ElOption,
+  ElDatePicker,
+  ElBreadcrumb,
+  ElBreadcrumbItem
 } from 'element-plus'
 import _Avatar from 'element-plus/lib/el-avatar'
+import _Row from 'element-plus/lib/el-row'
 import type { App } from 'vue'
 const eleArry = [
   ElButton,
@@ -44,7 +52,14 @@ const eleArry = [
   ElAvatar,
   ElDropdown,
   ElDropdownItem,
-  ElDropdownMenu
+  ElDropdownMenu,
+  ElRow,
+  ElCol,
+  ElSelect,
+  ElOption,
+  ElDatePicker,
+  ElBreadcrumb,
+  ElBreadcrumbItem
 ]
 
 function registerEle(app: App) {

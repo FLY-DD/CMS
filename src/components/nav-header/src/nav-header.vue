@@ -6,46 +6,44 @@
         class="fold"
         @click="foldChange"
       ></i>
-      <span>面包屑</span>
+      <breadcrumb :breadcrumbData="setBreadcrumbVal" />
     </div>
-    <div class="right">
-      <el-dropdown>
-        <div class="user flex">
-          <el-avatar
-            size="small"
-            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-            style="margin-right: 10px"
-          /><span>User</span>
-        </div>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item icon="el-icon-circle-plus-outline"
-              >退出登录</el-dropdown-item
-            >
-            <el-dropdown-item>Action 2</el-dropdown-item>
-            <el-dropdown-item>Action 3</el-dropdown-item>
-            <el-dropdown-item>Action 4</el-dropdown-item>
-            <el-dropdown-item>Action 5</el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
-    </div>
+    <div class="right"></div>
+    <nav-info />
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
+import NavInfo from './nav-info.vue'
+import Breadcrumb from '@/base-ui/breadcrumb'
+import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
+import { getBreadcrumbData } from '@/utils/mapMenuToRoutes'
 export default defineComponent({
   emits: ['foldchange'],
   name: 'nav-header',
+  components: {
+    NavInfo,
+    Breadcrumb
+  },
   setup(props, { emit }) {
+    const store = useStore()
     const isFold = ref(false)
+    const setBreadcrumbVal = computed(() => {
+      const userMenu = store.state.login.userMenu
+      const route = useRoute()
+      const path = route.path
+      return getBreadcrumbData(userMenu, path)
+    })
     function foldChange() {
       isFold.value = !isFold.value
       emit('foldchange', isFold.value)
     }
+
     return {
       foldChange,
-      isFold
+      isFold,
+      setBreadcrumbVal
     }
   }
 })
