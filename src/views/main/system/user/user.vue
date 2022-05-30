@@ -1,6 +1,6 @@
 <template>
   <div class="user">
-    <div style="min-height: 200px; background-color: #ccc">
+    <div style="min-height: 200px; background-color: #fff">
       <!-- 使用v-bind绑定多个属性时使用名称需与props内的名称相同 -->
       <new-form v-bind="formConfig" />
     </div>

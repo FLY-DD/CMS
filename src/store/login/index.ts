@@ -32,10 +32,9 @@ const loginInfo: Module<iloginState, iRootState> = {
       state.userInfo = data
     },
     changeUserMenu(state, data: any) {
-      console.log(222)
-
       state.userMenu = data
       const route = mapMenuToRouter(data)
+      //动态添加路由 发生时机：在获取到userMenu后
       route.forEach((item) => {
         router.addRoute('main', item)
       })
@@ -57,7 +56,7 @@ const loginInfo: Module<iloginState, iRootState> = {
       commit('changeUserMenu', userMenuData.data)
       storge.setCache('userMenu', userMenuData.data)
 
-      mapMenuToRouter(userMenuData.data)
+      // mapMenuToRouter(userMenuData.data)
       //4 跳转到首页
       router.push('/main')
     },

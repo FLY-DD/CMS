@@ -44,13 +44,13 @@ export default defineComponent({
     height: 100%;
     .menu {
       height: 100%;
-      background-color: blue;
+      background-color: #fff;
     }
     .content-header {
-      background-color: red;
+      background-color: #fff;
     }
     .content-main {
-      background-color: yellow;
+      background-color: #eee;
     }
   }
 }
