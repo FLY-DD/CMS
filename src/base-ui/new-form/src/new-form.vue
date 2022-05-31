@@ -6,6 +6,9 @@
     3 传入公共样式
     4 调整传递的值
      -->
+    <div>
+      <slot name="header"></slot>
+    </div>
     <el-form :label-width="labelWidth" :model="formData">
       <el-row>
         <template v-for="(item, index) in formItemMsg" :key="index">
@@ -50,6 +53,9 @@
         </template>
       </el-row>
     </el-form>
+    <div>
+      <slot name="bottom"></slot>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -95,6 +101,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(prop, { emit }) {
+    //监听formData的值 发生变化后修改父组件传过来的值
     const formData = ref({ ...prop.modelValue })
 
     watch(
