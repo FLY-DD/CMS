@@ -6,7 +6,7 @@
     3 传入公共样式
     4 调整传递的值
      -->
-    <el-form :label-width="labelWidth">
+    <el-form :label-width="labelWidth" :model="formData">
       <el-row>
         <template v-for="(item, index) in formItemMsg" :key="index">
           <el-col :span="8" :style="paddingStyle" v-bind="colLayout">
@@ -15,23 +15,36 @@
               :label="item.label"
               :rules="item.rule"
             >
-              <el-input v-bind="item.otherOptions" />
+              <el-input
+                v-bind="item.otherOptions"
+                v-model="formData[item.val]"
+              />
             </el-form-item>
             <el-form-item
               v-else-if="item.type === 'select'"
               :label="item.label"
             >
-              <el-select style="width: 100%" v-bind="item.otherOptions"
-                ><el-option v-for="opt in item.options" :key="opt.label">{{
-                  opt.label
-                }}</el-option></el-select
+              <el-select
+                style="width: 100%"
+                v-bind="item.otherOptions"
+                v-model="formData[item.val]"
+                ><el-option
+                  v-for="opt in item.options"
+                  :key="opt.label"
+                  :value="opt.value"
+                  >{{ opt.label }}</el-option
+                ></el-select
               >
             </el-form-item>
             <el-form-item
               v-else-if="item.type === 'datapicker'"
               :label="item.label"
             >
-              <el-date-picker v-bind="item.otherOptions" style="width: 100%" />
+              <el-date-picker
+                v-bind="item.otherOptions"
+                style="width: 100%"
+                v-model="formData[item.val]"
+              />
             </el-form-item>
           </el-col>
         </template>
@@ -40,7 +53,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, ref, watch } from 'vue'
 import type { iFormOption } from '../type'
 export default defineComponent({
   name: 'new-form',
@@ -74,6 +87,25 @@ export default defineComponent({
           xs: 24
         }
       }
+    },
+    modelValue: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  emits: ['update:modelValue'],
+  setup(prop, { emit }) {
+    const formData = ref({ ...prop.modelValue })
+
+    watch(
+      formData,
+      (val) => {
+        emit('update:modelValue', formData.value)
+      },
+      { deep: true }
+    )
+    return {
+      formData
     }
   }
 })

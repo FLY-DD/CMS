@@ -7,6 +7,7 @@ export const formConfig: iFormConfig = {
   formItemMsg: [
     {
       type: 'input',
+      val: 'id',
       label: '用户名',
       otherOptions: {
         placeholder: '请输入用户名'
@@ -14,6 +15,7 @@ export const formConfig: iFormConfig = {
     },
     {
       type: 'password',
+      val: 'password',
       label: '密码',
       otherOptions: {
         placeholder: '请输入密码'
@@ -21,23 +23,30 @@ export const formConfig: iFormConfig = {
     },
     {
       type: 'select',
+      val: 'sport',
       label: '喜欢的运动',
       otherOptions: {
-        placeholder: '请输入密码'
+        placeholder: '请选择运动'
       },
+      //select中value是实际展示的值 label是标签
       options: [
         {
-          value: 'bas',
+          value: '篮球',
           label: '篮球'
         },
         {
-          value: 'bot',
+          value: '足球',
           label: '足球'
+        },
+        {
+          value: '网球',
+          label: '网球'
         }
       ]
     },
     {
       type: 'datapicker',
+      val: 'date',
       label: '日期',
       otherOptions: {
         type: 'daterange',

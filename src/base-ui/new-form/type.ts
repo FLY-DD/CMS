@@ -2,6 +2,7 @@ type itemType = 'input' | 'password' | 'select' | 'datapicker'
 
 export interface iFormOption {
   type: itemType
+  val: string
   label: string
   options?: any[]
   rule?: any[]
